@@ -4,7 +4,7 @@ import os
 import requests
 
 
-def preprocess_web_attack():
+def preprocess_web_attack(download_data):
     def get_data():
         link="http://205.174.165.80/CICDataset/CIC-IDS-2017/Dataset/MachineLearningCSV.zip"
         r = requests.get(link)
@@ -15,7 +15,7 @@ def preprocess_web_attack():
         os.system("rm -r MachineLearningCSV")
         os.system("rm cicids.zip")
 
-    if get_data == True:
+    if download_data == True:
         get_data()
     #df = pd.read_csv("./raw_data/MachineLearningCSV/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv")
     df = pd.read_csv("./raw_data/cicids.csv")
@@ -40,4 +40,5 @@ def preprocess_web_attack():
     df.to_csv("../web_attack.csv", index=False, encoding='utf-8')
 
 if __name__ == "__main__":
-    preprocess_web_attack()
+    download_data = True
+    preprocess_web_attack(download_data)
