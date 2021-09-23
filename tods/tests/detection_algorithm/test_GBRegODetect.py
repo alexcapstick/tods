@@ -4,14 +4,14 @@ from d3m import container, utils
 from d3m.metadata import base as metadata_base
 from d3m.container import DataFrame as d3m_dataframe
 
-from tods.detection_algorithm.AutoRegODetect import AutoRegODetectorPrimitive
+from tods.detection_algorithm.GBRegODetect import GBRegODetectorPrimitive
 from pyod.utils.data import generate_data
 
 from tods.detection_algorithm.core.CollectiveCommonTest import CollectiveCommonTest
 
 import numpy as np
 
-class AutoRegODetectTestCase(unittest.TestCase):
+class GBRegODetectTestCase(unittest.TestCase):
     def setUp(self):
 
         self.maxDiff = None
@@ -35,11 +35,11 @@ class AutoRegODetectTestCase(unittest.TestCase):
 
 
 
-        hyperparams_default = AutoRegODetectorPrimitive.metadata.get_hyperparams().defaults()
+        hyperparams_default = GBRegODetectorPrimitive.metadata.get_hyperparams().defaults()
         hyperparams = hyperparams_default.replace({'contamination': self.contamination, })
         hyperparams = hyperparams.replace({'window_size': self.window_size, })
         hyperparams = hyperparams.replace({'return_subseq_inds': True, })
-        self.primitive = AutoRegODetectorPrimitive(hyperparams=hyperparams)
+        self.primitive = GBRegODetectorPrimitive(hyperparams=hyperparams)
 
         self.primitive.set_training_data(inputs=self.X_train)
         self.primitive.fit()
@@ -87,21 +87,21 @@ class AutoRegODetectTestCase(unittest.TestCase):
         }, {
             'selector': ['__ALL_ELEMENTS__', 0],
             'metadata': {
-                'name': 'AutoRegODetector0_0',
+                'name': 'GBRegODetector0_0',
                 'semantic_types': ['https://metadata.datadrivendiscovery.org/types/Attribute'],
                 'structural_type': 'numpy.int64',
             },
         }, {
             'selector': ['__ALL_ELEMENTS__', 1],
             'metadata': {
-                'name': 'AutoRegODetector0_1',
+                'name': 'GBRegODetector0_1',
                 'semantic_types': ['https://metadata.datadrivendiscovery.org/types/Attribute'],
                 'structural_type': 'numpy.int64',
             },
         }, {
             'selector': ['__ALL_ELEMENTS__', 2],
             'metadata': {
-                'name': 'AutoRegODetector0_2',
+                'name': 'GBRegODetector0_2',
                 'semantic_types': ['https://metadata.datadrivendiscovery.org/types/Attribute'],
                 'structural_type': 'numpy.int64',
             },

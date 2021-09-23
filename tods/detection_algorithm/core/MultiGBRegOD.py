@@ -10,11 +10,11 @@ from .CollectiveBase import CollectiveBaseDetector
 from combo.models.score_comb import average, maximization, median, aom, moa
 from combo.utils.utility import standardizer
 
-from .AutoRegOD import AutoRegOD
+from .GBRegOD import GBRegOD
 from .utility import get_sub_sequences_length
 
 
-class MultiAutoRegOD(CollectiveBaseDetector):
+class MultiGBRegOD(CollectiveBaseDetector):
     """Autoregressive models use linear regression to calculate a sample's
     deviance from the predicted value, which is then used as its
     outlier scores. This model is for multivariate time series.
@@ -59,7 +59,7 @@ class MultiAutoRegOD(CollectiveBaseDetector):
 
     def __init__(self, window_size, step_size=1, method='average',
                  weights=None, contamination=0.1):
-        super(MultiAutoRegOD, self).__init__(contamination=contamination)
+        super(MultiGBRegOD, self).__init__(contamination=contamination)
         self.window_size = window_size
         self.step_size = step_size
         self.method = method
@@ -93,7 +93,7 @@ class MultiAutoRegOD(CollectiveBaseDetector):
 
         # train one model for each dimension        
         for i in range(n_sequences):
-            models.append(AutoRegOD(window_size=self.window_size,
+            models.append(GBRegOD(window_size=self.window_size,
                                     step_size=self.step_size,
                                     contamination=self.contamination))
             models[i].fit(X[:, i].reshape(-1, 1))
@@ -223,7 +223,7 @@ if __name__ == "__main__": # pragma: no cover
     #      [18., 16], [20., 7], [18., 10], [3., 5], [5., 9], [23., 12],
     #      [22., 15]])
 
-    clf = MultiAutoRegOD(window_size=3, step_size=1, contamination=0.2)
+    clf = MultiGBRegOD(window_size=3, step_size=1, contamination=0.2)
 
     clf.fit(X_train)
     decision_scores, left_inds_, right_inds = clf.decision_scores_, \
