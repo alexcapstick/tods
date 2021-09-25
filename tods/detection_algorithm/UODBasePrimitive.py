@@ -318,7 +318,8 @@ class UnsupervisedOutlierDetectorBase(TODSUnsupervisedLearnerPrimitiveBase[Input
 
             if sparse.issparse(sk_output): # pragma: no cover
                 sk_output = sk_output.toarray()
-
+            with open('result_temp.npy', 'wb') as file:
+                np.save(file, self._clf.predict_proba(sk_inputs.values))
             outputs = self._wrap_predictions(inputs, sk_output)
             if len(outputs.columns) == len(self._input_column_names):
                 outputs.columns = self._input_column_names
